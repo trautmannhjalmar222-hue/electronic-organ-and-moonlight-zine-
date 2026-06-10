@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>AR Piano Zine - 完整版 (竖版信纸)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
+  <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
+  <style>
+    body { margin: 0; padding: 0; overflow: hidden; background: #000; }
+  </style>
+</head>
+<body>
+<script>
+  // ==========================================================
+  // ==================== 🌟 核心长文 ========================
+  // ==========================================================
+  let longText = `·开始
+一个模糊的夏天我开始学电子琴，
+爸妈带我去少年宫，我看了画画班，小提琴班最后看到电子琴班
+不知道怎么就学了电子琴，可能爸爸比较喜欢。
+
+-我在很长一段时间内对此感到怨恨，认为父母没有尊重我的意愿，我学电子琴只是因为爸爸热爱音乐，他希望在我身上有所传承，但是后来想想他们可能是询问我的意见了，只是当时我并不知道这个时间点的默认意味着什么，我没有拒绝，没有自己认真去做选择，才会去学琴，才会去经历之后的种种，并为此付出沉重的代价（对于当时的我来说），从那以后，我开始正视选择，真正看见每个选择背后的责任与一系列影响。
+
+·唱谱与戒尺
+我的电子琴老师是一个优雅的女人，但我很害怕她，我一开始上的是大课，老师要求唱谱，但我因为从小五音不全，又容易生病，嗓子不舒服，所以唱得不好，后来就不太愿意去唱，老师总是会以一种冷峻的目光久久注视我，我特别害怕，每次就从嗓子里挤出一点声音，干涩颤抖，而老师总是喜欢让全班安静下来听我弹唱，是一种重视还是一种惩罚，当时的我、现在的我都说不清，但他们说，老师也是为了你好，弹唱的那么多曲目，我能够记起的只剩下几个名字，但全班爆发出的那种异常兴奋的笑声，依旧反复出现在我的梦中，于一片寂静里，一阵一阵传来，于是我还像小时侯那样手指僵硬，脖颈发酸，期待意外降临，让一切都快点终结。
+
+慢慢的，我成为班上的差生，前几节家长陪同的课结束后，老师开始了一些惩戒措施，包括用戒尺打手，我总是弹着弹着，戒尺就出现在我的手上，有的时候我会躲，戒尺就打在琴键上，“啪”和琴键的声音混合在一起，老师会蹙眉瞥我，好像在说：你要为这样的噪音负责。
+
+再后来，在老师的明示暗示下我去上了小课，我进一步暴露在老师冷冷的目光下，戒尺从四面八方落下，我永远不知道自己会在什么时候被“提醒”，好像做什么都是错的，我是那个天生愚笨没有办法和音乐产生共鸣的人，琴键与其对应的音律法则铸就了一座无形的牢笼，我对它的规则一无所知，所以处处碰壁，最终在痛苦的反馈中形成肌肉记忆，一步步通关，但早就记不清具体的时间了
+
+-长大后再回忆这段经历，我惊讶于自己到底是怎么坚持下来的，毕竟那个时候的我，完全体会不到音乐的乐趣，完全不理解学琴练琴的规则，完全没有一点正反馈，在那个啥都不懂的年纪，从那个接触琴的夏天起，所有的记忆都与琴相关，夏天不再是西瓜与蝉，家不再是完全柔软，教室也不再是夸奖与赞赏，在某种程度上，早年间所有关于痛苦焦虑的记忆几乎都是学琴带给我的，对一个顺风顺水的孩子来说，我可以在其中汲取很多成长需要的养分，但它的强度与持续时间，对当时的我来说，已在承受的边缘，且对于这段记忆及它带来的痛苦，我束手无措，只能等待时间稀释它在我生命中的浓度，直到有一天，我终于能够消化它，并且让它帮助我面对人生中其它困难。
+
+我也会怀疑、反思，自己是否在某种程度上放大了当时的痛苦，甚至通过品味痛苦填补单调乏味的生活，在我写下这些文字的时间点，在我真正鼓起勇气，向父母进行求证的时间点，我的答案是肯定的，最直接的证据是，我一直以为自己学了六七年，但实质上我只学了三年半，我在自己浑然未觉的情况下篡改了这段记忆，并把学琴的时间翻了一倍多，而我也没想象中那么蠢笨脆弱，用三年考到十级其实很厉害。
+
+在长久的不敢、不愿回忆后，我陷入了一种受害者的叙述逻辑，我向很多人诉说我的痛苦，久久不能原谅父母、老师以及当年嘲笑我的同学，但倘若换到他们的视角，当年好像也各有各的原因，父母希望我多一点兴趣爱好，希望我真的爱上音乐，学好琴未来还能当个音乐老师，希望我不要半途而废，希望他们没有把我宠坏。老师希望我练好琴，不要拖班上进度，希望能向我的父母交差，希望我可以享受公开演奏的快乐。班上的同学他们当时也和我一样小，他们可能也只是觉得好玩，他们不会蓄意嘲笑，也不会记住当年那个总是出错的女生，真正做错了的，到底是谁，可能也没有谁，真正要归咎的话，还是回到我自己吧，是我不够聪明，不够有天赋，而且很长一段时间内我都在逃避，我不懂规则也从来不愿去弄懂规则，我体会痛苦但从来没有真正去做一点什么，我一直在消极地抵抗，对不起所有人，包括我自己在内，我可以选择不玩这个游戏，也可以在漫长时间中真正学好，但当时我也不够成熟，甚至没有解决问题的意识。怪到最后，怪无可怪，可能再回到那个时间点我还是会痛苦、逃避，但是既然已经经历过这一关，还是希望多多少少从中意识到点什么。
+
+·上课
+我一共上了三种电子琴课：大课、小课、暑期班，暑期班的意思是在上小课的时候暑期再参与大课，再后来为了考级需要我还被送到老家领居家的姐姐那里学琴，真的很尴尬。
+小时候的课程总是被安排的，也不知道为啥反正就是上了，但我也很感谢我的妈妈，即使我真的没啥天赋她也没放弃我，而是一直尽己所能帮我想办法，提供资源，现在想来，或许也是一种被托底的安全感吧。但自那以后，我一直都在期望在做选择时可以掌握主动权，如果你不选，别人就会帮你选，而当别人帮你选过后，更改的成本就太大了，想要真正停止需要付出一定代价。
+
+·表演
+我印象最深的两次表演都不是正式的，甚至有一次都没有演上。
+一次是夏夜，大人们起哄，有相当大一部分原因是我爸喜欢炫耀，我在院子里弹了《西班牙斗牛曲》，弹得非常糟糕，但是亲戚们还是鼓掌鼓得很热烈，后来还点评了不少，但实际上点评得完全不在点子上，那一刻我突然意识到他们根本就不懂，只是在装行家而已。那个时刻我突然意识到事实与观点的界限，事实，人心中所想，真正表达出来需要经历一个长长的链路。
+
+第二次是少年宫内部的汇演，不是很正式，我不想去但又纠结，那天雨下得很大，我一直在拖时间，爸爸带我化完妆赶过去已经结束了，但我本身位置就在整个表演的最边边，也没有造成很大影响。那天所有人都很尴尬，老师看到我淋着雨，化完妆，姗姗来迟，露出一个相当复杂的表情，想要批评又想要安慰，最后别过脸去，装作没有看见我。
+
+后来想起来，其实我挺差劲的，这件事错得离谱，对不起老师同学，也对不起爸爸，当时都是自行找外面的人化妆，一次妆发也要一百多，十几年前其实挺贵的，但回想起来，当时我确实非常不想去，一方面是觉得我在其中本身也不重要，另一方面是我对于舞台实在没什么兴趣，与朋友聊过这个话题，他们喜欢舞台，多数是喜欢那种万众瞩目的感觉，喜欢通过舞台进行表达，但我从小就不喜欢的，我是个胆小的人，讨厌一切即时的注视，讨厌站在舞台上的孤立无助，讨厌因为我影响到他人，即使一直被往台上推，我到最后也没享受过舞台，甚至到现在还会为上台表演的人紧张难过，即使没什么必要。
+这一点帮我了解到人其实是多样的，不喜欢上台其实也不会发生什么，我完全可以在不伤害他人的情况下选择我舒服的方式度过一生。
+
+·考级
+我也不知道为什么要考级，但大家都在考，所以我也要考，考级在我的暑假中从未缺席，每周要上4节课，每天还要练3个半小时，当时暑假爸妈忙我住在老家，需要每天乘1小时的公交车去上课，考级这个事情就变成了我每天主线，我也不知道那些音阶那些曲子到底是干嘛的，也没体会到快乐，只是练习着，直到十级考完，那个时候因为电子琴我和家中已经闹出太多不愉快，我非常坚决考完之后就不练了，但是我没有告诉任何人考十级的时候我弹到一半忘谱了，老师叫停了我，但我还是过了，我一瞬间意识到这个考级其实很形式化，一面我在窃喜，但是另一面我感到不值，为那些认真练习天资聪颖的小孩，也为曾经抱着崇敬之心的自己，我甚至在某一刻觉得让我过不了才是正理。
+
+现在想来，考级其实是一套证明体系，但证明的目的，证明体系的可靠性其实都是模糊的，但人们似乎总是需要这样的证明去把人与人区别开，并且用这套体系的结果去推衍其它体系的结果，反之亦然。
+
+我学琴的时候和老师的关系并不好，在她眼中我多少是有点笨的，我总是觉得老师有点轻视我，她之前经常说的一句话是“琴练不好，学习也好不了的，特别是数学”，为此我特别害怕，我学琴的时候还很小，并没有完全理解成绩意味着什么，学习也是懵懵懂懂的，但比较幸运的是，我从小学习就比较轻松，成绩不错，低年级时看不出来，在高年级的时候，有次大考我考了全县前几名，一开始我没有意识到这有什么特别的，但我的电子琴老师偶然知道了这件事，几乎就是一瞬间，她对我的态度完全变了，那是一种很微妙的感觉，她的眉毛变得柔软，我第一次直视她含着笑意的眼睛，那双眼睛把我从电子琴的体系中拉出来，我明白了原来除了电子琴的评价体系，外界还有其它的评价标准与体系，不学琴，学不好琴，世界也不会塌。
+
+写在最后：
+考完十级后，我再也没有碰过琴，我的琴从客厅的核心位置挪到角落，再挪到仓库，最后挪回老家，我试图将这段记忆遗忘，但实际上从未成功过，在每个我觉得撑不下去的时刻，感到痛苦的时刻我都会下意识想起那段经历，在那段经历中找一个小的切口，与当下的情境进行对比分析，在这次认真梳理之前，我已经把练琴的经历反反复复想了无数遍了，有极端畏惧不敢深究的时刻，有进行掩饰假装豁达的时刻，有恍恍惚惚慢慢轻盈的时刻，在我的脑海中，它在被时光磨损，也被不断加工雕琢，在我成长过程中，被更多的知识与经历观照，慢慢变得莹润，富有解释空间。
+
+实话说，这一段经历早已超过了我一开始给它的“痛苦”“走投无路”的定义，随着我离琴越远，脱离那个考级表演的游戏越久，我反而察觉到它作为一段经历的丰富与深厚，反而开始理解音乐的美妙，我开始回忆起第一次听见德彪西的《月光》的时刻，开始意识到学琴练琴可以不是为了考级表演，也可以只为了开心，只为了复刻喜欢的歌曲，我终于意识到琴是牢笼，也是铠甲，小时候我或许真的被困其中，但现在我也可以依靠它抵御生活的压力与不可控，我终于真实地看到了曾经的自己，看见自己当时的无助与痛苦，也看见自己咬牙坚持的韧劲，与可以选择放弃的底气。`;
+
+  // --- 文字排版参数 ---
+  let myTextSize = 18;       // 字体大小
+  let myLineHeight = 40;     // 行距
+  let letterSpacing = 2;     
+  let typeSpeed = 3;         
+  
+  // ==========================================================
+  // ==================== 全局系统变量 ========================
+  // ==========================================================
+  let currentScene = 0; 
+  let globalFont = '"STFangsong", "FangSong", "SimSun", serif';
+
+  // --- 资源对象 ---
+  let bgmSound;
+  let bgImage;
+  let decoImages = [];
+  let numDecoImages = 9;
+
+  let img1, img2, img3, img4, img5, img6, img7, img8, img9;
+
+  // --- 场景 1 变量 ---
+  let video, handpose, hands = [], isModelReady = false;
+  let keys = [];
+  let sentences = [
+    "你是哑巴吗", "我们也是为你好", "谁不辛苦", 
+    "自己选的路哭着也要走完", "弹不好琴，学习也学不好", 
+    "这个事情不好商量，去练琴", "没有教过这么蠢的"
+  ];
+  let floatingTexts = [];      
+  let triggeredSentences = 0;  
+  let maxTriggersBeforeLight = 5; 
+  let lightBreathing = 0;
+
+  // --- 场景 2 变量 ---
+  let ripples = [];    
+  let splashes = [];   
+  let snowflakes = []; 
+  let fallingImgs = []; 
+  let globalFadeAlpha = 0, isScene2FadingOut = false;
+
+  let allPages = [];        
+  let currentPage = 0;      
+  let visibleCount = 0;     
+  let s2State = 0;          
+  let s2Timer = 0;
+
+  // ==========================================================
+  // 1. 预加载资源 
+  // ==========================================================
+  function preload() {
+    // 自动检测当前是否在在线预览环境 (Blob URL)
+    let isPreview = window.location.href.startsWith('blob:') || window.location.protocol === 'data:';
+
+    if (!isPreview) {
+      // ----------------------------------------------------
+      // 【真实环境】当部署到 GitHub 时，代码会自动执行这里
+      // ----------------------------------------------------
+      bgmSound = loadSound("assets/moon.mp3");
+      bgImage = loadImage("assets/p0.png");
+
+      img1 = loadImage("assets/p1.png");
+      img2 = loadImage("assets/p2.png");
+      img3 = loadImage("assets/p3.png");
+      img4 = loadImage("assets/p4.png");
+      img5 = loadImage("assets/p5.png");
+      img6 = loadImage("assets/p6.png");
+      img7 = loadImage("assets/p7.png");
+      img8 = loadImage("assets/p8.png");
+      img9 = loadImage("assets/p9.png");
+    } else {
+      // ----------------------------------------------------
+      // 【预览环境】自动拦截无效请求，用透明图形占位防崩溃
+      // ----------------------------------------------------
+      console.log("检测到预览环境，已暂停加载本地资产，防止网络报错。");
+      
+      bgmSound = { loop: () => {}, isPlaying: () => false, stop: () => {} }; // 虚拟音频对象
+      bgImage = createImage(800, 1200); // 透明背景图片
+      
+      img1 = createImage(100, 100);     // 虚拟飘落相片
+      img2 = createImage(100, 100);
+      img3 = createImage(100, 100);
+      img4 = createImage(100, 100);
+      img5 = createImage(100, 100);
+      img6 = createImage(100, 100);
+      img7 = createImage(100, 100);
+      img8 = createImage(100, 100);
+      img9 = createImage(100, 100);
+    }
+  }
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    textFont(globalFont); 
+
+    decoImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+
+    video = createCapture(VIDEO);
+    video.size(640, 480);
+    video.hide();
+    handpose = ml5.handpose(video, () => { isModelReady = true; });
+    handpose.on("predict", results => { hands = results; });
+    
+    buildPianoKeys();
+    initSnow(); 
+    initFallingImgs(); 
+  }
+
+  function buildPianoKeys() {
+    keys = [];
+    let numWhiteKeys = 8;
+    let whiteKeyWidth = width / numWhiteKeys;
+    let whiteKeyHeight = height * 0.35; 
+    let whiteNotes = [60, 62, 64, 65, 67, 69, 71, 72]; 
+    let blackNotes = [61, 63, -1, 66, 68, 70, -1, -1]; 
+
+    for (let i = 0; i < numWhiteKeys; i++) {
+      let osc = new p5.Oscillator('triangle'); 
+      osc.freq(midiToFreq(whiteNotes[i])); 
+      osc.amp(0); 
+      osc.start(); 
+      keys.push({
+        type: 'white', x: i * whiteKeyWidth, y: height - whiteKeyHeight,
+        w: whiteKeyWidth, h: whiteKeyHeight, osc: osc,
+        isPressed: false, wasPressed: false, pressAmount: 0 
+      });
+    }
+
+    let blackKeyWidth = whiteKeyWidth * 0.55;
+    let blackKeyHeight = whiteKeyHeight * 0.6; 
+    for (let i = 0; i < numWhiteKeys; i++) {
+      if (blackNotes[i] !== -1) {
+        let osc = new p5.Oscillator('triangle'); 
+        osc.freq(midiToFreq(blackNotes[i])); 
+        osc.amp(0); 
+        osc.start();
+        keys.push({
+          type: 'black', x: (i * whiteKeyWidth) + whiteKeyWidth - (blackKeyWidth / 2),
+          y: height - whiteKeyHeight, w: blackKeyWidth, h: blackKeyHeight,
+          osc: osc, isPressed: false, wasPressed: false, pressAmount: 0 
+        });
+      }
+    }
+  }
+
+  // ==========================================================
+  // 飘落的照片系统
+  // ==========================================================
+  function initFallingImgs() {
+    fallingImgs = [];
+    for (let i = 0; i < numDecoImages; i++) {
+      fallingImgs.push({
+        x: random(width),
+        y: random(-height * 1.5, height), 
+        speedY: random(0.3, 1.2),     
+        speedX: random(-0.3, 0.3),    
+        rot: random(TWO_PI),          
+        rotSpeed: random(-0.01, 0.01),
+        w: random(60, 110),            
+        imgIndex: i                    
+      });
+    }
+  }
+
+  function drawFallingImgs() {
+    for (let p of fallingImgs) {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.rot += p.rotSpeed;
+
+      if (p.y > height + 150) {
+        p.y = random(-200, -50);
+        p.x = random(width);
+        p.imgIndex = int(random(numDecoImages));
+      }
+
+      push();
+      translate(p.x, p.y);
+      rotate(p.rot);
+      
+      tint(255, 102); 
+      imageMode(CENTER);
+      
+      let img = decoImages[p.imgIndex];
+      if (img && img.width > 0) {
+        let h = p.w * (img.height / img.width);
+        image(img, 0, 0, p.w, h);
+      }
+      pop();
+    }
+  }
+
+  // ==========================================================
+  // 核心排版引擎 (修改以适配竖直长方形信纸)
+  // ==========================================================
+  function calculateLayout() {
+    allPages = [];
+    let currentPageLetters = [];
+    textSize(myTextSize); textFont(globalFont);
+
+    // 【调整】强制设置信纸高宽比为竖长方形
+    let pH = min(height * 0.88, 1200);      // 占据屏幕大部分高度，但不超过 1200px
+    let pW = min(pH * 0.65, width * 0.85);  // 宽度为高度的 0.65 倍，并确保在小屏幕上不溢出
+    let paperX = width / 2 - pW / 2;
+    let paperY = height / 2 - pH / 2;
+
+    // 【调整】动态内部留白，根据变窄的信纸响应式缩小 Padding，防止文字超出
+    let paddingX = min(80, pW * 0.12); 
+    let paddingY = min(100, pH * 0.12);
+    
+    let startX = paperX + paddingX;
+    let startY = paperY + paddingY;
+    let maxX = paperX + pW - paddingX;
+    let maxY = paperY + pH - paddingY - 50; 
+
+    let x = startX; let y = startY;
+    let paragraphs = longText.split('\n');
+
+    for (let p = 0; p < paragraphs.length; p++) {
+      let paragraph = paragraphs[p];
+      if (paragraph.trim() === "") {
+        y += myLineHeight;
+        if (y > maxY) { allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY; }
+        continue;
+      }
+      for (let i = 0; i < paragraph.length; i++) {
+        let char = paragraph[i];
+        let charW = textWidth(char) + letterSpacing;
+        if (x + charW > maxX) {
+          x = startX; y += myLineHeight;
+          if (y > maxY) { allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY; }
+        }
+        currentPageLetters.push(createLetter(char, x, y));
+        x += charW;
+      }
+      x = startX; y += myLineHeight;
+      if (y > maxY && p < paragraphs.length - 1) { 
+        allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY;
+      }
+    }
+    if (currentPageLetters.length > 0) allPages.push(currentPageLetters);
+  }
+
+  function createLetter(char, x, y) {
+    let isPermanent = random(1) > 0.85; 
+    return {
+      char: char, x: x, y: y, alpha: 255, blurAmount: 0, isPermanent: isPermanent, life: 0, forceFade: false, 
+      update: function () {
+        this.life++;
+        if (!this.isPermanent && this.life > 180) { 
+          if (this.alpha > 30) this.alpha -= random(0.3, 1.5);
+          if (this.blurAmount < 6) this.blurAmount += random(0.01, 0.03);
+        }
+        if (this.forceFade) { this.alpha -= 15; this.blurAmount += 0.8; }
+      },
+      show: function () {
+        if (this.alpha <= 0) return;
+        push();
+        if (this.blurAmount > 0) drawingContext.filter = `blur(${this.blurAmount}px)`;
+        fill(40, this.alpha); noStroke(); textSize(myTextSize); textAlign(LEFT, TOP); text(this.char, this.x, this.y);
+        pop();
+      }
+    };
+  }
+
+  // ==========================================================
+  // 主循环 Draw
+  // ==========================================================
+  function draw() {
+    if (currentScene === 0) drawScene0();
+    else if (currentScene === 1) drawScene1();
+    else if (currentScene === 2) drawScene2();
+  }
+
+  function drawScene0() {
+    background(0); textAlign(CENTER, CENTER); fill(255); textSize(24);
+    text("轻触屏幕开始回忆", width / 2, height / 2);
+    textSize(14); fill(150); text("请允许访问摄像头，然后举起你的双手", width / 2, height / 2 + 40);
+  }
+
+  function drawScene1() {
+    background(0); 
+    push(); translate(width, 0); scale(-1, 1); tint(180, 200, 255, 140); 
+    if (video.loadedmetadata) image(video, 0, 0, width, height); pop();
+
+    fill(0, 80); rect(0, 0, width, height);
+    for (let k of keys) { k.pressAmount = lerp(k.pressAmount, k.isPressed ? 1 : 0, 0.3); }
+
+    for (let k of keys) {
+      if (k.type === 'white') {
+        let yOffset = k.pressAmount * 15; 
+        push(); drawingContext.shadowBlur = 15 - k.pressAmount * 10; drawingContext.shadowColor = 'rgba(0, 0, 0, 0.5)'; drawingContext.shadowOffsetY = 8 - k.pressAmount * 6;
+        fill(lerpColor(color(255), color(210), k.pressAmount)); stroke(50); strokeWeight(1); rect(k.x, k.y + yOffset, k.w, k.h, 0, 0, 6, 6); pop();
+      }
+    }
+    for (let k of keys) {
+      if (k.type === 'black') {
+        let yOffset = k.pressAmount * 10; 
+        push(); drawingContext.shadowBlur = 20 - k.pressAmount * 15; drawingContext.shadowColor = 'rgba(0, 0, 0, 0.8)'; drawingContext.shadowOffsetY = 12 - k.pressAmount * 8;
+        fill(lerpColor(color(40), color(15), k.pressAmount)); stroke(0); rect(k.x, k.y + yOffset, k.w, k.h, 0, 0, 4, 4); stroke(120, 150);
+        line(k.x + 3, k.y + yOffset + 3, k.x + k.w - 3, k.y + yOffset + 3); pop();
+      }
+    }
+
+    for(let k of keys) { k.isPressed = false; }
+
+    if (hands.length > 0) {
+      for (let i = 0; i < hands.length; i++) {
+        let indexTip = hands[i].annotations.indexFinger[3];
+        let fx = width - (indexTip[0] / 640) * width; let fy = (indexTip[1] / 480) * height;
+        drawButterfly(fx, fy);
+        if (triggeredSentences >= maxTriggersBeforeLight && dist(fx, fy, width / 2, height / 2 - 150) < 60) { transitionToScene2(); return; }
+        
+        let hitKey = null;
+        for (let k of keys) { if (k.type === 'black' && fx > k.x && fx < k.x + k.w && fy > k.y && fy < k.y + k.h) { hitKey = k; break; } }
+        if (!hitKey) { for (let k of keys) { if (k.type === 'white' && fx > k.x && fx < k.x + k.w && fy > k.y && fy < k.y + k.h) { hitKey = k; break; } } }
+        if (hitKey) hitKey.isPressed = true;
+      }
+    }
+
+    for (let i = 0; i < keys.length; i++) {
+      let k = keys[i];
+      if (k.isPressed && !k.wasPressed) { k.osc.amp(0.8, 0.02); triggerText(k.x + k.w / 2, k.y); } 
+      else if (!k.isPressed && k.wasPressed) { k.osc.amp(0, 0.8); }
+      k.wasPressed = k.isPressed;
+    }
+
+    updateAndDrawScene1Texts();
+    if (triggeredSentences >= maxTriggersBeforeLight) drawTheLight(width / 2, height / 2 - 150);
+    if (!isModelReady) { fill(255, 100); textSize(14); text("正在唤醒手势追踪模型，请稍候...", width / 2, 50); }
+  }
+
+  function drawButterfly(x, y) {
+    push(); translate(x, y); let flap = sin(frameCount * 0.15) * 15; drawingContext.shadowBlur = 25; drawingContext.shadowColor = 'rgba(150, 200, 255, 0.9)';
+    noStroke(); fill(200, 230, 255, 200); ellipse(-10, 0, 20 + flap, 30); ellipse(10, 0, 20 + flap, 30); fill(255); ellipse(0, 0, 4, 15); pop();
+  }
+
+  function triggerText(baseX, baseY) {
+    floatingTexts.push({ str: random(sentences), x: baseX + random(-30, 30), y: baseY - 30, life: 255, speed: random(1.5, 3), shake: random(100) });
+    triggeredSentences++;
+  }
+
+  function updateAndDrawScene1Texts() {
+    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+      let t = floatingTexts[i]; t.y -= t.speed; t.life -= 1.5;        
+      push(); fill(255, t.life); noStroke(); textSize(22 + t.life/60); text(t.str, t.x + (noise(frameCount * 0.02 + t.shake) - 0.5) * 50, t.y); pop();
+      if (t.life <= 0) floatingTexts.splice(i, 1);
+    }
+  }
+
+  function drawTheLight(x, y) {
+    lightBreathing += 0.04; let r = 80 + sin(lightBreathing) * 15; 
+    push(); drawingContext.shadowBlur = 50; drawingContext.shadowColor = 'white';
+    fill(255, 255, 255, 180); noStroke(); circle(x, y, r);
+    drawingContext.shadowBlur = 0; fill(0); textSize(16); text("触碰光点", x, y); pop();
+  }
+
+  // --- 场景 2 ---
+  function drawScene2() {
+    handleWaterPhysics();
+    drawRiverBackground();
+    drawWaterSplashes();
+
+    // 绘制随落雪一同飘落的照片
+    drawFallingImgs();
+
+    noTint();
+    
+    // 【调整】同步更新图像的绘制宽高，确保其呈竖直长方形
+    let pH = min(height * 0.88, 1200);
+    let pW = min(pH * 0.65, width * 0.85);
+    
+    if (bgImage && bgImage.width > 0) {
+      push(); imageMode(CENTER); tint(255, 127); image(bgImage, width / 2, height / 2, pW, pH); pop();
+    }
+
+    if (allPages.length > 0) {
+      let currentLetters = allPages[currentPage];
+
+      if (s2State === 0) { 
+        if (frameCount % typeSpeed === 0 && visibleCount < currentLetters.length) visibleCount++;
+        if (visibleCount >= currentLetters.length) { s2State = 1; s2Timer = 0; }
+      } 
+      else if (s2State === 1) { 
+        s2Timer++;
+        if (s2Timer > 80) { 
+          if (currentPage < allPages.length - 1) {
+            s2State = 2; 
+            for(let l of currentLetters) l.forceFade = true;
+          } else { s2State = 3; }
+        }
+      } 
+      else if (s2State === 2) { 
+        let allFaded = true;
+        for(let l of currentLetters) { if (l.alpha > 0) allFaded = false; }
+        if (allFaded) { currentPage++; visibleCount = 0; s2State = 0; }
+      }
+
+      for (let i = 0; i < visibleCount; i++) {
+        currentLetters[i].update(); currentLetters[i].show();
+      }
+    }
+
+    drawSnow();
+
+    if (s2State === 3 && !isScene2FadingOut) {
+      drawTheLight(width / 2, height - 120);
+    }
+
+    if (isScene2FadingOut) {
+      globalFadeAlpha += 1.5;
+      for (let l of allPages[currentPage]) l.forceFade = true;
+      fill(0, globalFadeAlpha); noStroke(); rect(0, 0, width, height);
+      if (globalFadeAlpha >= 255) transitionToScene1();
+    }
+  }
+
+  // ==========================================================
+  // 全局控制与音频启动保护
+  // ==========================================================
+  function transitionToScene2() {
+    currentScene = 2; 
+    
+    for(let k of keys) { k.osc.amp(0, 0.2); }
+    
+    if (bgmSound && !bgmSound.isPlaying()) {
+      bgmSound.loop();
+    }
+    
+    globalFadeAlpha = 0; isScene2FadingOut = false;
+    currentPage = 0; visibleCount = 0; s2State = 0; s2Timer = 0;
+    
+    initFallingImgs(); 
+    calculateLayout();
+  }
+
+  function transitionToScene1() {
+    currentScene = 1; triggeredSentences = 0; floatingTexts = []; lightBreathing = 0;
+    if (bgmSound && bgmSound.isPlaying()) bgmSound.stop();
+  }
+
+  function mousePressed() {
+    if (currentScene === 0) { 
+      userStartAudio(); 
+      currentScene = 1; 
+      return; 
+    }
+    
+    if (currentScene === 1 && triggeredSentences >= maxTriggersBeforeLight) {
+      if (dist(mouseX, mouseY, width / 2, height / 2 - 150) < 50) transitionToScene2();
+    }
+    if (currentScene === 2 && s2State === 3 && !isScene2FadingOut) {
+      if (dist(mouseX, mouseY, width / 2, height - 120) < 50) isScene2FadingOut = true;
+    }
+  }
+
+  function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+    if (currentScene === 1) buildPianoKeys();
+    if (currentScene === 2) {
+      calculateLayout();
+      currentPage = 0; visibleCount = 0; s2State = 0; s2Timer = 0; 
+    }
+  }
+
+  function handleWaterPhysics() {
+    let dx = mouseX - pmouseX; let dy = mouseY - pmouseY; let moveSpeed = sqrt(dx*dx + dy*dy);
+    
+    if (moveSpeed > 2 && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height && !isScene2FadingOut) {
+      if (frameCount % 3 === 0) ripples.push({ x: mouseX, y: mouseY, r: 0, alpha: 255, speed: random(3, 6) });
+      let numParticles = map(moveSpeed, 2, 50, 2, 10, true); 
+      for (let i = 0; i < numParticles; i++) splashes.push({ x: mouseX + random(-10, 10), y: mouseY + random(-10, 10), vx: dx * 0.1 + random(-2, 2), vy: dy * 0.1 + random(-4, -1), life: 255, size: random(2, 6) });
+    }
+    for (let i = ripples.length - 1; i >= 0; i--) { let rip = ripples[i]; rip.r += rip.speed; rip.alpha -= 4; if (rip.alpha <= 0) ripples.splice(i, 1); }
+    for (let i = splashes.length - 1; i >= 0; i--) { let p = splashes[i]; p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life -= 6; if (p.life <= 0) splashes.splice(i, 1); }
+  }
+
+  function drawRiverBackground() {
+    background(8); noStroke(); let time = frameCount * 0.006; let windSpeed = frameCount * 2.5; 
+    for (let i = 0; i < 12; i++) {
+      fill(map(i, 0, 11, 12, 55), 140); beginShape(); vertex(0, height);
+      for (let x = 0; x <= width + 50; x += 25) { 
+        let y = (height * 0.05) + (i * height * 0.08) + ((noise((x - windSpeed * (1 + i * 0.1)) * 0.002, time * 0.5 + i) + 0.2 * noise(((x - windSpeed * (1 + i * 0.1)) * 0.002) * 4, (time * 0.5 + i) * 4 - time * 2)) * 280);
+        let distortion = 0; for (let rip of ripples) { let d = dist(x, y, rip.x, rip.y); let ringDist = abs(d - rip.r); if (ringDist < 40) distortion -= sin(map(ringDist, 0, 40, PI/2, 0)) * 30 * (rip.alpha / 255); }
+        vertex(x, y + distortion);
+      }
+      vertex(width, height); endShape(CLOSE);
+    }
+    drawingContext.shadowBlur = 20; drawingContext.shadowColor = 'rgba(255, 255, 255, 0.9)'; 
+    for (let y = height * 0.5; y < height; y += 18) {
+      for (let x = 0; x < width + 50; x += 25) {
+        let nx = (x - windSpeed * 1.5) * 0.005; let ny = y * 0.012; let n = noise(nx, ny, time * 0.5); let yFactor = constrain(map(y, height * 0.5, height * 0.85, 0, 1.3), 0, 1.3);
+        if (n > 0.60) {
+          let intensity = map(n, 0.60, 1, 0, 255) * yFactor; fill(200, intensity); if (n > 0.72) fill(255, intensity + 150); 
+          ellipse(x + map(noise(nx * 4, time * 1.5), 0, 1, -25, 25) + sin(ny * 10 + time * 3) * 10, y + map(noise(nx * 2, ny * 2), 0, 1, -15, 15) + cos(nx * 10 + time * 2) * 2, map(n, 0.60, 1, 15, 220) * yFactor, map(n, 0.60, 1, 0.5, 3) * yFactor);
+        }
+      }
+    }
+    drawingContext.shadowBlur = 0;
+  }
+
+  function initSnow() { 
+    for (let i = 0; i < 45; i++) {
+      snowflakes.push({ 
+        x: random(width), 
+        y: random(height), 
+        baseSize: random(2, 4.5), 
+        speedY: random(0.6, 1.8), 
+        speedX: random(0.2, 0.8), 
+        offset: random(100)
+      }); 
+    }
+  }
+
+  function drawSnow() {
+    noStroke(); 
+    for (let flake of snowflakes) {
+      flake.x += flake.speedX + (noise(flake.offset) - 0.5) * 1.5; 
+      flake.y += flake.speedY; 
+      flake.offset += 0.01;
+      
+      if (flake.y > height) { flake.y = -10; flake.x = random(width); }
+      if (flake.x > width + 10) flake.x = -10; 
+      if (flake.x < -10) flake.x = width + 10;
+      
+      let baseAlpha = 150 + sin(frameCount * 0.05 + flake.offset) * 80;
+
+      push();
+      translate(flake.x, flake.y);
+      for(let i = 0; i < 3; i++) { 
+        let px = (noise(frameCount * 0.01 + i * 10, flake.x) - 0.5) * flake.baseSize;
+        let py = (noise(frameCount * 0.01 + i * 20, flake.y) - 0.5) * flake.baseSize;
+        let maxR = flake.baseSize - i * 0.5;
+        for(let r = maxR; r > 0; r -= 1) {
+          let a = map(r, 0, maxR, baseAlpha, 0);
+          fill(255, a);
+          ellipse(px, py, r * 2, r * 2);
+        }
+      }
+      pop();
+    }
+  }
+
+  function drawWaterSplashes() {
+    noFill(); for (let rip of ripples) { stroke(255, rip.alpha * 0.8); strokeWeight(map(rip.alpha, 0, 255, 0.5, 2.5)); ellipse(rip.x, rip.y, rip.r * 2, rip.r * 1.2); }
+    noStroke(); drawingContext.shadowBlur = 15; drawingContext.shadowColor = 'rgba(255, 255, 255, 0.9)';
+    for (let p of splashes) { fill(255, p.life); ellipse(p.x, p.y, p.size, p.size * 1.5); }
+    drawingContext.shadowBlur = 0;
+  }
+</script>
+</body>
+</html>
