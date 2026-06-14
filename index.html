@@ -111,34 +111,32 @@
   let bgmFading = false;
 
   // ==========================================================
-  // 1. 预加载资源 (✨ 引入 GitHub 专属防崩溃机制)
+  // 1. 预加载资源 (引入异常捕获以防环境拦截报错)
   // ==========================================================
   function preload() {
-    // 即使某个文件在 GitHub 404，传入空回调函数 () => {} 作为 failure 回调，
-    // 就能阻止 p5.js 崩溃黑屏，让程序强行继续运行。
-    bgmSound = loadSound("assets/moon.mp3", () => {}, (err) => console.warn("音频加载失败，请检查文件名或大小写"));
-    bgImage  = loadImage("assets/p0.png", () => {}, (err) => console.warn("图片 p0 加载失败"));
+    try { bgmSound = loadSound("assets/moon.mp3"); } catch(e) { console.warn("Load Audio Failed:", e); }
+    try { bgImage = loadImage("assets/p0.png"); } catch(e) { console.warn("Load Image Failed:", e); }
 
-    img1 = loadImage("assets/p1.png", () => {}, (err) => console.warn("图片 p1 加载失败"));
-    img2 = loadImage("assets/p2.png", () => {}, (err) => console.warn("图片 p2 加载失败"));
-    img3 = loadImage("assets/p3.png", () => {}, (err) => console.warn("图片 p3 加载失败"));
-    img4 = loadImage("assets/p4.png", () => {}, (err) => console.warn("图片 p4 加载失败"));
-    img5 = loadImage("assets/p5.png", () => {}, (err) => console.warn("图片 p5 加载失败"));
-    img6 = loadImage("assets/p6.png", () => {}, (err) => console.warn("图片 p6 加载失败"));
-    img7 = loadImage("assets/p7.png", () => {}, (err) => console.warn("图片 p7 加载失败"));
-    img8 = loadImage("assets/p8.png", () => {}, (err) => console.warn("图片 p8 加载失败"));
-    img9 = loadImage("assets/p9.png", () => {}, (err) => console.warn("图片 p9 加载失败"));
+    try { img1 = loadImage("assets/p1.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img2 = loadImage("assets/p2.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img3 = loadImage("assets/p3.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img4 = loadImage("assets/p4.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img5 = loadImage("assets/p5.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img6 = loadImage("assets/p6.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img7 = loadImage("assets/p7.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img8 = loadImage("assets/p8.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img9 = loadImage("assets/p9.png"); } catch(e) { console.warn("Load Image Failed:", e); }
   }
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
     textFont(globalFont); 
 
-    // 过滤掉因为环境问题未成功加载的空对象，防止渲染时报错
+    // 过滤掉因为环境问题未成功加载的空对象
     decoImages = [];
     let tempImgs = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
     for (let i = 0; i < tempImgs.length; i++) {
-      if (tempImgs[i] && tempImgs[i].width > 0) decoImages.push(tempImgs[i]);
+      if (tempImgs[i]) decoImages.push(tempImgs[i]);
     }
 
     video = createCapture(VIDEO);
