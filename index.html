@@ -61,8 +61,8 @@
 实话说，这一段经历早已超过了我一开始给它的“痛苦”“走投无路”的定义，随着我离琴越远，脱离那个考级表演的游戏越久，我反而察觉到它作为一段经历的丰富与深厚，反而开始理解音乐的美妙，我开始回忆起第一次听见德彪西的《月光》的时刻，开始意识到学琴、练琴可以不是为了考级表演，也可以只为了开心，只为了复刻喜欢的歌曲，我终于意识到琴是牢笼，也是铠甲，小时候我或许真的被困其中，但现在我也可以依靠它抵御生活的压力与不可控，我终于真实地看到了曾经的自己，看见自己当时的无助与痛苦，也看见自己咬牙坚持的韧劲，与可以选择放弃的底气。`;
 
   // --- 文字排版参数 ---
-  let myTextSize = 15;       // 改小了字体尺寸
-  let myLineHeight = 32;     // 适配新字体略微调小行高
+  let myTextSize = 15;       
+  let myLineHeight = 32;     
   let letterSpacing = 2;     
   let typeSpeed = 4;         
   
@@ -111,32 +111,31 @@
   let bgmFading = false;
 
   // ==========================================================
-  // 1. 预加载资源 (引入异常捕获以防环境拦截报错)
+  // 1. 预加载资源
   // ==========================================================
   function preload() {
-    try { bgmSound = loadSound("assets/moon.mp3"); } catch(e) { console.warn("Load Audio Failed:", e); }
-    try { bgImage = loadImage("assets/p0.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    bgmSound = loadSound("assets/moon.mp3", () => {}, (err) => console.warn("音频加载失败", err));
+    bgImage  = loadImage("assets/p0.png", () => {}, (err) => console.warn("图片 p0 加载失败"));
 
-    try { img1 = loadImage("assets/p1.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img2 = loadImage("assets/p2.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img3 = loadImage("assets/p3.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img4 = loadImage("assets/p4.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img5 = loadImage("assets/p5.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img6 = loadImage("assets/p6.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img7 = loadImage("assets/p7.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img8 = loadImage("assets/p8.png"); } catch(e) { console.warn("Load Image Failed:", e); }
-    try { img9 = loadImage("assets/p9.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    img1 = loadImage("assets/p1.png", () => {}, () => {});
+    img2 = loadImage("assets/p2.png", () => {}, () => {});
+    img3 = loadImage("assets/p3.png", () => {}, () => {});
+    img4 = loadImage("assets/p4.png", () => {}, () => {});
+    img5 = loadImage("assets/p5.png", () => {}, () => {});
+    img6 = loadImage("assets/p6.png", () => {}, () => {});
+    img7 = loadImage("assets/p7.png", () => {}, () => {});
+    img8 = loadImage("assets/p8.png", () => {}, () => {});
+    img9 = loadImage("assets/p9.png", () => {}, () => {});
   }
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
     textFont(globalFont); 
 
-    // 过滤掉因为环境问题未成功加载的空对象
     decoImages = [];
     let tempImgs = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
     for (let i = 0; i < tempImgs.length; i++) {
-      if (tempImgs[i]) decoImages.push(tempImgs[i]);
+      if (tempImgs[i] && tempImgs[i].width > 0) decoImages.push(tempImgs[i]);
     }
 
     video = createCapture(VIDEO);
@@ -187,9 +186,6 @@
     }
   }
 
-  // ==========================================================
-  // 飘落的照片系统
-  // ==========================================================
   function initFallingImgs() {
     fallingImgs = [];
     let spawnCount = decoImages.length > 0 ? decoImages.length : 9;
@@ -238,20 +234,18 @@
   }
 
   // ==========================================================
-  // 核心排版引擎【包含 智能避头标点 + 段落翻页判断】
+  // ✨ 重构排版引擎：自然长文流动 + 智能避孤 + 避头避尾规则
   // ==========================================================
   function calculateLayout() {
     allPages = [];
     let currentPageLetters = [];
     textSize(myTextSize); textFont(globalFont);
 
-    // 竖长方形信纸设置
     let pH = min(height * 0.88, 1200);      
     let pW = min(pH * 0.65, width * 0.85);  
     let paperX = width / 2 - pW / 2;
     let paperY = height / 2 - pH / 2;
 
-    // ✨ 这里增加了 paddingX 的比例和最大值，使得两边页边距更宽
     let paddingX = min(120, pW * 0.18); 
     let paddingY = min(100, pH * 0.12);
     
@@ -263,8 +257,10 @@
     let x = startX; let y = startY;
     let paragraphs = longText.split('\n');
 
-    // 匹配不能出现在行首的标点符号的正则表达式
-    let punctRegex = /^[·，。、！？：；”’）》】\.,!?]/;
+    // ✨ 匹配不能出现在行首的标点符号（如逗号、句号）
+    let cannotStartLine = /^[，。、！？：；”’）》】\.,!?]/;
+    // ✨ 匹配不能出现在行末的标点符号（如左括号、左双引号）
+    let cannotEndLine = /^[“‘（《【]/;
 
     for (let p = 0; p < paragraphs.length; p++) {
       let paragraph = paragraphs[p];
@@ -280,31 +276,12 @@
         continue;
       }
 
-      // 【提前预测段落高度】，实现“一段话结束才可以翻页”
-      let linesNeeded = 1;
-      let simX = startX;
-      for (let i = 0; i < paragraph.length; i++) {
-        let char = paragraph[i];
-        let charW = textWidth(char) + letterSpacing;
-        let nextChar = i + 1 < paragraph.length ? paragraph[i+1] : '';
-        let isNextPunc = punctRegex.test(nextChar);
-        
-        // 模拟换行
-        if (simX + charW > maxX) {
-          simX = startX + charW;
-          linesNeeded++;
-        } else if (isNextPunc && simX + charW + textWidth(nextChar) + letterSpacing > maxX) {
-          simX = startX + charW;
-          linesNeeded++;
-        } else {
-          simX += charW;
-        }
-      }
+      let isHeading = paragraph.startsWith('·');
       
-      let pHeight = linesNeeded * myLineHeight;
-
-      // 如果当前页装不下这一整段话，且当前页已有文字，我们直接换新页！
-      if (y + pHeight > maxY + myLineHeight && currentPageLetters.length > 0) {
+      // ✨ 小标题避孤机制：
+      // 如果当前行是小标题，并且计算发现本页下方留不出两行的高度（即放不下正文），
+      // 我们直接强行把小标题换到下一页，保证它和下面的正文待在一起。
+      if (isHeading && (y + myLineHeight * 2 > maxY) && currentPageLetters.length > 0) {
         allPages.push(currentPageLetters);
         currentPageLetters = [];
         x = startX;
@@ -315,24 +292,29 @@
       for (let i = 0; i < paragraph.length; i++) {
         let char = paragraph[i];
         let charW = textWidth(char) + letterSpacing;
+        
         let nextChar = i + 1 < paragraph.length ? paragraph[i+1] : '';
-        let isNextPunc = punctRegex.test(nextChar);
+        let nextCharW = textWidth(nextChar) + letterSpacing;
 
-        // 智能换行避头尾
+        let forceWrap = false;
+        
+        // 1. 正常超出右边界换行
         if (x + charW > maxX) {
-          x = startX; 
-          y += myLineHeight;
-          if (y > maxY) { // 若一段话超级长跨越了整页的高度，也只能被动截断跨页
-            allPages.push(currentPageLetters); 
-            currentPageLetters = []; 
-            x = startX; y = startY; 
-          }
+          forceWrap = true;
         } 
-        // 避免下一个标点符号单独掉到下一行行首，把当前字一起拉下去
-        else if (isNextPunc && x + charW + textWidth(nextChar) + letterSpacing > maxX) {
+        // 2. 避首机制：当前字放得下，但下一个字是逗号/句号等不能放行首的符号且下一字越界，则当前字提前换行陪它。
+        else if (cannotStartLine.test(nextChar) && x + charW + nextCharW > maxX) {
+          forceWrap = true;
+        } 
+        // 3. 避尾机制：当前字是前置括号/引号不能放句末，且下一个字越界，则当前字提前换行。
+        else if (cannotEndLine.test(char) && x + charW + nextCharW > maxX) {
+          forceWrap = true;
+        }
+
+        if (forceWrap) {
           x = startX; 
           y += myLineHeight;
-          if (y > maxY) { 
+          if (y > maxY) { // 如果超出当前页最大高度，发生翻页
             allPages.push(currentPageLetters); 
             currentPageLetters = []; 
             x = startX; y = startY; 
@@ -347,7 +329,6 @@
       x = startX; 
       y += myLineHeight;
       
-      // 如果刚好触底且不是最后一段话，执行自然翻页
       if (y > maxY && p < paragraphs.length - 1) { 
         if (currentPageLetters.length > 0) {
           allPages.push(currentPageLetters); 
@@ -356,7 +337,7 @@
         x = startX; y = startY;
       }
     }
-    // 最后收尾，把剩下的字组成一页
+    
     if (currentPageLetters.length > 0) allPages.push(currentPageLetters);
   }
 
@@ -382,9 +363,6 @@
     };
   }
 
-  // ==========================================================
-  // 主循环 Draw
-  // ==========================================================
   function draw() {
     if (currentScene === 0) drawScene0();
     else if (currentScene === 1) drawScene1();
@@ -493,15 +471,15 @@
     if (allPages.length > 0) {
       let currentLetters = allPages[currentPage];
 
-      // == 核心排版引擎的状态机已修改，加入了全新的终止态（s2State = 4） ==
       if (s2State === 0) { 
         if (frameCount % typeSpeed === 0 && visibleCount < currentLetters.length) visibleCount++;
         if (visibleCount >= currentLetters.length) { s2State = 1; s2Timer = 0; }
       } 
       else if (s2State === 1) { 
         s2Timer++;
-        if (s2Timer > 120) { // 稍微给点余量读完最后一句 
-          s2State = 2; // 无条件进入淡出状态，为下页/终止做准备
+        // ✨ 修改：停留时间从 120 缩短到 50，换页更快
+        if (s2Timer > 50) { 
+          s2State = 2; 
           for(let l of currentLetters) l.forceFade = true;
         }
       } 
@@ -512,7 +490,7 @@
           if (currentPage < allPages.length - 1) {
             currentPage++; visibleCount = 0; s2State = 0; 
           } else {
-            s2State = 4; // 进入终止态
+            s2State = 4; 
           }
         }
       }
@@ -528,27 +506,25 @@
     if (s2State === 4) {
       if (!bgmFading) {
         if (bgmSound && typeof bgmSound.setVolume === 'function') {
-          // 调用 p5.sound 的内置缓动，用 6 秒将音量滑落至 0
           bgmSound.setVolume(0, 6); 
         }
         bgmFading = true;
       }
       
       if (finalQuoteAlpha < 255) {
-        finalQuoteAlpha += 1.2; // 文字慢慢显现
+        finalQuoteAlpha += 1.2; 
       }
 
       push();
       textAlign(CENTER, CENTER);
       textSize(22);
       textLeading(40);
-      fill(40, finalQuoteAlpha); // 深色字体匹配信纸背景
+      fill(40, finalQuoteAlpha); 
       let quote = "我们生来就拥有\n越过一切困难的勇气、毅力，\n与换个游戏玩玩的底气。";
       text(quote, width / 2, height / 2);
       pop();
     }
 
-    // 保留了兜底逻辑，但光点被移除，正常流程下不会再被触发回溯
     if (isScene2FadingOut) {
       globalFadeAlpha += 1.5;
       for (let l of allPages[currentPage]) l.forceFade = true;
@@ -557,23 +533,19 @@
     }
   }
 
-  // ==========================================================
-  // 全局控制与音频启动保护
-  // ==========================================================
   function transitionToScene2() {
     currentScene = 2; 
     
     for(let k of keys) { k.osc.amp(0, 0.2); }
     
-    // 安全验证与播放
     if (bgmSound && typeof bgmSound.isPlaying === 'function' && !bgmSound.isPlaying()) {
-      bgmSound.setVolume(1); // 重新进入场景时恢复音量
+      bgmSound.setVolume(1); 
       bgmSound.loop();
     }
     
     globalFadeAlpha = 0; isScene2FadingOut = false;
     currentPage = 0; visibleCount = 0; s2State = 0; s2Timer = 0;
-    finalQuoteAlpha = 0; bgmFading = false; // 每次进入重置终止态
+    finalQuoteAlpha = 0; bgmFading = false; 
     
     initFallingImgs(); 
     calculateLayout();
@@ -582,7 +554,6 @@
   function transitionToScene1() {
     currentScene = 1; triggeredSentences = 0; floatingTexts = []; lightBreathing = 0;
     
-    // 安全验证与停止
     if (bgmSound && typeof bgmSound.isPlaying === 'function' && bgmSound.isPlaying()) {
       bgmSound.stop();
     }
