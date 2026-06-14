@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>AR Piano Zine - 完整版 (竖版信纸)</title>
+  <title>AR Piano Zine - 完整版 (竖版信纸 + 智能排版)</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>
   <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
@@ -17,54 +17,54 @@
   // ==========================================================
   let longText = `·开始
 一个模糊的夏天我开始学电子琴，
-爸妈带我去少年宫，我看了画画班，小提琴班最后看到电子琴班
-不知道怎么就学了电子琴，可能爸爸比较喜欢。
+爸妈带我去少年宫，我看了画画班，小提琴班最后看到电子琴班，
+不知道怎么就学了电子琴，在夏日的热浪中我们一家就这么草率地做了决定，那个时候三个人都不知道，学琴、练琴会对我，对我们家的亲子关系产生什么样的影响。
 
--我在很长一段时间内对此感到怨恨，认为父母没有尊重我的意愿，我学电子琴只是因为爸爸热爱音乐，他希望在我身上有所传承，但是后来想想他们可能是询问我的意见了，只是当时我并不知道这个时间点的默认意味着什么，我没有拒绝，没有自己认真去做选择，才会去学琴，才会去经历之后的种种，并为此付出沉重的代价（对于当时的我来说），从那以后，我开始正视选择，真正看见每个选择背后的责任与一系列影响。
+-我在很长一段时间内对此感到怨恨，认为父母没有尊重我的意愿，我学电子琴只是因为爸爸热爱音乐，他希望在我身上有所传承，但是后来想想他们可能是询问我的意见了，只是当时我并不知道这个时间点的默认意味着什么，我没有拒绝，没有自己认真去做选择，才会去学琴，才会去经历之后的种种，并为此付出沉重的代价（对于当时的我来说），从那以后，我开始正视选择，真正看见每个选择背后的责任与一系列影响。如果问学琴的经历给我带来的最大影响是什么，大概就是“如果你不自己选，就会有人帮你选”，真正能为我负责的永远只有自己。
 
 ·唱谱与戒尺
-我的电子琴老师是一个优雅的女人，但我很害怕她，我一开始上的是大课，老师要求唱谱，但我因为从小五音不全，又容易生病，嗓子不舒服，所以唱得不好，后来就不太愿意去唱，老师总是会以一种冷峻的目光久久注视我，我特别害怕，每次就从嗓子里挤出一点声音，干涩颤抖，而老师总是喜欢让全班安静下来听我弹唱，是一种重视还是一种惩罚，当时的我、现在的我都说不清，但他们说，老师也是为了你好，弹唱的那么多曲目，我能够记起的只剩下几个名字，但全班爆发出的那种异常兴奋的笑声，依旧反复出现在我的梦中，于一片寂静里，一阵一阵传来，于是我还像小时侯那样手指僵硬，脖颈发酸，期待意外降临，让一切都快点终结。
+我的电子琴老师是一个优雅的女人，但我很害怕她，我一开始上的是大课，老师要求唱谱，但我因为从小五音不全，又容易生病，总是唱得不好，后来就不太愿意去唱，老师总是会以一种冷峻的目光久久注视我，我特别害怕，每次就从嗓子里挤出一点声音，干涩颤抖，而老师喜欢让全班安静下来听我弹唱，是一种重视还是一种惩罚，当时的我、现在的我都说不清，但他们说，老师也是为了你好，弹唱的那么多曲目，我能够记起的只剩下几个名字，但全班爆发出的那种异常兴奋的笑声，依旧反复出现在我的梦中，于一片寂静里，一阵一阵传来，于是我还像小时侯那样手指僵硬，脖颈发酸，期待意外降临，让一切都快点终结。
 
 慢慢的，我成为班上的差生，前几节家长陪同的课结束后，老师开始了一些惩戒措施，包括用戒尺打手，我总是弹着弹着，戒尺就出现在我的手上，有的时候我会躲，戒尺就打在琴键上，“啪”和琴键的声音混合在一起，老师会蹙眉瞥我，好像在说：你要为这样的噪音负责。
 
 再后来，在老师的明示暗示下我去上了小课，我进一步暴露在老师冷冷的目光下，戒尺从四面八方落下，我永远不知道自己会在什么时候被“提醒”，好像做什么都是错的，我是那个天生愚笨没有办法和音乐产生共鸣的人，琴键与其对应的音律法则铸就了一座无形的牢笼，我对它的规则一无所知，所以处处碰壁，最终在痛苦的反馈中形成肌肉记忆，一步步通关，但早就记不清具体的时间了
 
--长大后再回忆这段经历，我惊讶于自己到底是怎么坚持下来的，毕竟那个时候的我，完全体会不到音乐的乐趣，完全不理解学琴练琴的规则，完全没有一点正反馈，在那个啥都不懂的年纪，从那个接触琴的夏天起，所有的记忆都与琴相关，夏天不再是西瓜与蝉，家不再是完全柔软，教室也不再是夸奖与赞赏，在某种程度上，早年间所有关于痛苦焦虑的记忆几乎都是学琴带给我的，对一个顺风顺水的孩子来说，我可以在其中汲取很多成长需要的养分，但它的强度与持续时间，对当时的我来说，已在承受的边缘，且对于这段记忆及它带来的痛苦，我束手无措，只能等待时间稀释它在我生命中的浓度，直到有一天，我终于能够消化它，并且让它帮助我面对人生中其它困难。
+-长大后再回忆这段经历，我惊讶于自己到底是怎么坚持下来的，毕竟那个时候的我，完全体会不到音乐的乐趣，完全不理解学琴、练琴的规则，完全没有一点正反馈，在那个啥都不懂的年纪，从那个接触琴的夏天起，所有的记忆都与琴相关，夏天不再是西瓜与蝉，家不再是完全温暖柔软的，教室也不再是夸奖与赞赏，在某种程度上，早年间所有关于痛苦焦虑的记忆几乎都是学琴带给我的，对一个顺风顺水的孩子来说，我可以在其中汲取很多成长需要的养分，但它的强度与持续时间，对当时的我来说，已在承受的边缘，且对于这段记忆及它带来的痛苦，我束手无措，只能等待时间稀释它在我生命中的浓度，直到有一天，我终于能够消化它，并且让它帮助我面对人生中其它困难。
 
-我也会怀疑、反思，自己是否在某种程度上放大了当时的痛苦，甚至通过品味痛苦填补单调乏味的生活，在我写下这些文字的时间点，在我真正鼓起勇气，向父母进行求证的时间点，我的答案是肯定的，最直接的证据是，我一直以为自己学了六七年，但实质上我只学了三年半，我在自己浑然未觉的情况下篡改了这段记忆，并把学琴的时间翻了一倍多，而我也没想象中那么蠢笨脆弱，用三年考到十级其实很厉害。
+我也会怀疑、反思，自己是否在某种程度上放大了当时的痛苦，甚至通过品味痛苦填补单调乏味的生活，在我写下这些文字的时间点，在我真正鼓起勇气，向父母进行求证的时间点，我的答案是肯定的，最直接的证据是，我一直以为自己学了六七年，但实质上我只学了三年半，我在自己浑然未觉的情况下篡改了这段记忆，并把学琴的时间翻了一倍多，而我也没想象中那么蠢笨脆弱，用三年考到十级，对于小朋友来说是挺不错的。
 
-在长久的不敢、不愿回忆后，我陷入了一种受害者的叙述逻辑，我向很多人诉说我的痛苦，久久不能原谅父母、老师以及当年嘲笑我的同学，但倘若换到他们的视角，当年好像也各有各的原因，父母希望我多一点兴趣爱好，希望我真的爱上音乐，学好琴未来还能当个音乐老师，希望我不要半途而废，希望他们没有把我宠坏。老师希望我练好琴，不要拖班上进度，希望能向我的父母交差，希望我可以享受公开演奏的快乐。班上的同学他们当时也和我一样小，他们可能也只是觉得好玩，他们不会蓄意嘲笑，也不会记住当年那个总是出错的女生，真正做错了的，到底是谁，可能也没有谁，真正要归咎的话，还是回到我自己吧，是我不够聪明，不够有天赋，而且很长一段时间内我都在逃避，我不懂规则也从来不愿去弄懂规则，我体会痛苦但从来没有真正去做一点什么，我一直在消极地抵抗，对不起所有人，包括我自己在内，我可以选择不玩这个游戏，也可以在漫长时间中真正学好，但当时我也不够成熟，甚至没有解决问题的意识。怪到最后，怪无可怪，可能再回到那个时间点我还是会痛苦、逃避，但是既然已经经历过这一关，还是希望多多少少从中意识到点什么。
+在长久的不敢、不愿回忆后，我陷入了一种受害者的叙述逻辑，我向很多人诉说我的痛苦，久久不能原谅父母、老师以及当年嘲笑我的同学，但倘若换到他们的视角，当年好像也各有各的原因，父母希望我多一点兴趣爱好，希望我真的爱上音乐，学好琴未来还能当个音乐老师，希望我不要半途而废，希望他们没有把我宠坏。老师希望我练好琴，不要拖班上进度，希望能向我的父母交差，希望我可以享受公开演奏的快乐。班上的同学他们当时也和我一样小，他们可能也只是觉得好玩，他们不会蓄意嘲笑，也不会记住当年那个总是出错的女生，真正做错了的，到底是谁，可能也没有谁，真正要归咎的话，还是回到我自己吧，是我不够聪明，不够有天赋，而且很长一段时间内都在逃避，我不懂规则也从来不愿去弄懂规则，我体会痛苦但从来没有真正去做一点什么以消除痛苦，我一直在消极地抵抗，对不起所有人，包括我自己在内，我可以选择不玩这个游戏，也可以在漫长时间中真正学好，但当时我也不够成熟，甚至没有解决问题的意识。怪到最后，怪无可怪，可能再回到那个时间点我还是会痛苦、逃避，但是既然已经经历过这一关，还是希望多多少少从中意识到点什么。
 
 ·上课
-我一共上了三种电子琴课：大课、小课、暑期班，暑期班的意思是在上小课的时候暑期再参与大课，再后来为了考级需要我还被送到老家领居家的姐姐那里学琴，真的很尴尬。
-小时候的课程总是被安排的，也不知道为啥反正就是上了，但我也很感谢我的妈妈，即使我真的没啥天赋她也没放弃我，而是一直尽己所能帮我想办法，提供资源，现在想来，或许也是一种被托底的安全感吧。但自那以后，我一直都在期望在做选择时可以掌握主动权，如果你不选，别人就会帮你选，而当别人帮你选过后，更改的成本就太大了，想要真正停止需要付出一定代价。
+我一共上了三种电子琴课：大课、小课、暑期班，暑期班的意思是在上小课的同时，暑期再参与大课，再后来为了考级需要我还被送到老家领居家的姐姐那里被看着学琴，真的很尴尬。
+小时候的课程总是被安排的，也不知道为啥反正就是上了，但我也很感谢我的妈妈，即使我真的没啥天赋，她也没放弃我，而是一直尽己所能帮我想办法，提供资源，现在想来，或许也是一种被托底的安全感吧。但自那以后，我一直都在期望在做选择时可以掌握主动权，如果你不选，别人就会帮你选，而当别人帮你选过后，更改的成本就太大了，想要真正停止，需要付出一定代价。
 
 ·表演
 我印象最深的两次表演都不是正式的，甚至有一次都没有演上。
-一次是夏夜，大人们起哄，有相当大一部分原因是我爸喜欢炫耀，我在院子里弹了《西班牙斗牛曲》，弹得非常糟糕，但是亲戚们还是鼓掌鼓得很热烈，后来还点评了不少，但实际上点评得完全不在点子上，那一刻我突然意识到他们根本就不懂，只是在装行家而已。那个时刻我突然意识到事实与观点的界限，事实，人心中所想，真正表达出来需要经历一个长长的链路。
+一次是夏夜，大人们起哄，（有相当大一部分原因是我爸喜欢炫耀）我当时手足无措极了，但也不懂拒绝就在院子里弹了《西班牙斗牛曲》，弹得非常糟糕，但是亲戚们还是鼓掌鼓得很热烈，后来还点评了不少，但实际上点评得完全不在点子上，那一刻我突然意识到他们根本就不懂，只是在装行家而已。那个时刻我突然意识到事实与观点的界限，事实，人心中所想，真正表达出来需要经历一个长长的链路。
 
 第二次是少年宫内部的汇演，不是很正式，我不想去但又纠结，那天雨下得很大，我一直在拖时间，爸爸带我化完妆赶过去已经结束了，但我本身位置就在整个表演的最边边，也没有造成很大影响。那天所有人都很尴尬，老师看到我淋着雨，化完妆，姗姗来迟，露出一个相当复杂的表情，想要批评又想要安慰，最后别过脸去，装作没有看见我。
 
 后来想起来，其实我挺差劲的，这件事错得离谱，对不起老师同学，也对不起爸爸，当时都是自行找外面的人化妆，一次妆发也要一百多，十几年前其实挺贵的，但回想起来，当时我确实非常不想去，一方面是觉得我在其中本身也不重要，另一方面是我对于舞台实在没什么兴趣，与朋友聊过这个话题，他们喜欢舞台，多数是喜欢那种万众瞩目的感觉，喜欢通过舞台进行表达，但我从小就不喜欢的，我是个胆小的人，讨厌一切即时的注视，讨厌站在舞台上的孤立无助，讨厌因为我影响到他人，即使一直被往台上推，我到最后也没享受过舞台，甚至到现在还会为上台表演的人紧张难过，即使没什么必要。
-这一点帮我了解到人其实是多样的，不喜欢上台其实也不会发生什么，我完全可以在不伤害他人的情况下选择我舒服的方式度过一生。
+这一点帮我了解到人其实是多样的，不喜欢上台其实也不会发生什么，我完全可以在不伤害他人的情况下，选择我舒服的方式度过一生。
 
 ·考级
-我也不知道为什么要考级，但大家都在考，所以我也要考，考级在我的暑假中从未缺席，每周要上4节课，每天还要练3个半小时，当时暑假爸妈忙我住在老家，需要每天乘1小时的公交车去上课，考级这个事情就变成了我每天主线，我也不知道那些音阶那些曲子到底是干嘛的，也没体会到快乐，只是练习着，直到十级考完，那个时候因为电子琴我和家中已经闹出太多不愉快，我非常坚决考完之后就不练了，但是我没有告诉任何人考十级的时候我弹到一半忘谱了，老师叫停了我，但我还是过了，我一瞬间意识到这个考级其实很形式化，一面我在窃喜，但是另一面我感到不值，为那些认真练习天资聪颖的小孩，也为曾经抱着崇敬之心的自己，我甚至在某一刻觉得让我过不了才是正理。
+我也不知道为什么要考级，但大家都在考，所以我也要考，考级在我的暑假中从未缺席，每周要上4节课，每天还要练3个半小时，当时暑假爸妈忙，我住在老家，需要每天乘1小时的公交车去上课，考级这个事情就变成了我每天的主线，我也不知道那些音阶、曲子到底是干嘛的，也没体会到快乐，只是练习着，直到十级考完，那个时候因为电子琴我和家中已经闹出太多不愉快，我非常坚决考完之后就不练了，但是我没有告诉任何人考十级的时候我弹到一半忘谱了，老师叫停了我，但我还是过了，我一瞬间意识到这个考级其实很形式化。一方面我在窃喜，但是另一方面我感到不值，为那些认真练习天资聪颖的小孩，也为曾经抱着崇敬之心的自己，我甚至在某一刻觉得让我过不了才是正理。
 
 现在想来，考级其实是一套证明体系，但证明的目的，证明体系的可靠性其实都是模糊的，但人们似乎总是需要这样的证明去把人与人区别开，并且用这套体系的结果去推衍其它体系的结果，反之亦然。
 
-我学琴的时候和老师的关系并不好，在她眼中我多少是有点笨的，我总是觉得老师有点轻视我，她之前经常说的一句话是“琴练不好，学习也好不了的，特别是数学”，为此我特别害怕，我学琴的时候还很小，并没有完全理解成绩意味着什么，学习也是懵懵懂懂的，但比较幸运的是，我从小学习就比较轻松，成绩不错，低年级时看不出来，在高年级的时候，有次大考我考了全县前几名，一开始我没有意识到这有什么特别的，但我的电子琴老师偶然知道了这件事，几乎就是一瞬间，她对我的态度完全变了，那是一种很微妙的感觉，她的眉毛变得柔软，我第一次直视她含着笑意的眼睛，那双眼睛把我从电子琴的体系中拉出来，我明白了原来除了电子琴的评价体系，外界还有其它的评价标准与体系，不学琴，学不好琴，世界也不会塌。
+我学琴的时候和老师的关系并不好，在她眼中我多少是有点笨的，我总是觉得老师有点轻视我，她之前经常说的一句话是“琴练不好，学习也好不了的，特别是数学”，为此我特别害怕，我学琴的时候还很小，并没有完全理解成绩意味着什么，学习也是懵懵懂懂的，但比较幸运的是，我从小学习就比较轻松，成绩不错，低年级时看不出来，在高年级的时候，有次大考我考了全县前几名，一开始我没有意识到这有什么特别的，但我的电子琴老师偶然知道了这件事，几乎就是一瞬间，她对我的态度完全变了，那是一种很微妙的感觉，她的眉毛变得柔软，我第一次能够直视她含着笑意的眼睛，那双眼睛把我从电子琴的体系中拉出来，我明白了原来除了电子琴的评价体系，外界还有其它的评价标准与体系，不学琴，学不好琴，世界也不会塌。
 
 写在最后：
 考完十级后，我再也没有碰过琴，我的琴从客厅的核心位置挪到角落，再挪到仓库，最后挪回老家，我试图将这段记忆遗忘，但实际上从未成功过，在每个我觉得撑不下去的时刻，感到痛苦的时刻我都会下意识想起那段经历，在那段经历中找一个小的切口，与当下的情境进行对比分析，在这次认真梳理之前，我已经把练琴的经历反反复复想了无数遍了，有极端畏惧不敢深究的时刻，有进行掩饰假装豁达的时刻，有恍恍惚惚慢慢轻盈的时刻，在我的脑海中，它在被时光磨损，也被不断加工雕琢，在我成长过程中，被更多的知识与经历观照，慢慢变得莹润，富有解释空间。
 
-实话说，这一段经历早已超过了我一开始给它的“痛苦”“走投无路”的定义，随着我离琴越远，脱离那个考级表演的游戏越久，我反而察觉到它作为一段经历的丰富与深厚，反而开始理解音乐的美妙，我开始回忆起第一次听见德彪西的《月光》的时刻，开始意识到学琴练琴可以不是为了考级表演，也可以只为了开心，只为了复刻喜欢的歌曲，我终于意识到琴是牢笼，也是铠甲，小时候我或许真的被困其中，但现在我也可以依靠它抵御生活的压力与不可控，我终于真实地看到了曾经的自己，看见自己当时的无助与痛苦，也看见自己咬牙坚持的韧劲，与可以选择放弃的底气。`;
+实话说，这一段经历早已超过了我一开始给它的“痛苦”“走投无路”的定义，随着我离琴越远，脱离那个考级表演的游戏越久，我反而察觉到它作为一段经历的丰富与深厚，反而开始理解音乐的美妙，我开始回忆起第一次听见德彪西的《月光》的时刻，开始意识到学琴、练琴可以不是为了考级表演，也可以只为了开心，只为了复刻喜欢的歌曲，我终于意识到琴是牢笼，也是铠甲，小时候我或许真的被困其中，但现在我也可以依靠它抵御生活的压力与不可控，我终于真实地看到了曾经的自己，看见自己当时的无助与痛苦，也看见自己咬牙坚持的韧劲，与可以选择放弃的底气。`;
 
   // --- 文字排版参数 ---
-  let myTextSize = 18;       // 字体大小
-  let myLineHeight = 40;     // 行距
+  let myTextSize = 15;       // 改小了字体尺寸
+  let myLineHeight = 32;     // 适配新字体略微调小行高
   let letterSpacing = 2;     
-  let typeSpeed = 3;         
+  let typeSpeed = 4;         
   
   // ==========================================================
   // ==================== 全局系统变量 ========================
@@ -105,56 +105,39 @@
   let visibleCount = 0;     
   let s2State = 0;          
   let s2Timer = 0;
+  
+  // --- 场景 2 终止态新增变量 ---
+  let finalQuoteAlpha = 0;
+  let bgmFading = false;
 
   // ==========================================================
-  // 1. 预加载资源 
+  // 1. 预加载资源 (引入异常捕获以防环境拦截报错)
   // ==========================================================
   function preload() {
-    // 自动检测当前是否在在线预览环境 (Blob URL)
-    let isPreview = window.location.href.startsWith('blob:') || window.location.protocol === 'data:';
+    try { bgmSound = loadSound("assets/moon.mp3"); } catch(e) { console.warn("Load Audio Failed:", e); }
+    try { bgImage = loadImage("assets/p0.png"); } catch(e) { console.warn("Load Image Failed:", e); }
 
-    if (!isPreview) {
-      // ----------------------------------------------------
-      // 【真实环境】当部署到 GitHub 时，代码会自动执行这里
-      // ----------------------------------------------------
-      bgmSound = loadSound("assets/moon.mp3");
-      bgImage = loadImage("assets/p0.png");
-
-      img1 = loadImage("assets/p1.png");
-      img2 = loadImage("assets/p2.png");
-      img3 = loadImage("assets/p3.png");
-      img4 = loadImage("assets/p4.png");
-      img5 = loadImage("assets/p5.png");
-      img6 = loadImage("assets/p6.png");
-      img7 = loadImage("assets/p7.png");
-      img8 = loadImage("assets/p8.png");
-      img9 = loadImage("assets/p9.png");
-    } else {
-      // ----------------------------------------------------
-      // 【预览环境】自动拦截无效请求，用透明图形占位防崩溃
-      // ----------------------------------------------------
-      console.log("检测到预览环境，已暂停加载本地资产，防止网络报错。");
-      
-      bgmSound = { loop: () => {}, isPlaying: () => false, stop: () => {} }; // 虚拟音频对象
-      bgImage = createImage(800, 1200); // 透明背景图片
-      
-      img1 = createImage(100, 100);     // 虚拟飘落相片
-      img2 = createImage(100, 100);
-      img3 = createImage(100, 100);
-      img4 = createImage(100, 100);
-      img5 = createImage(100, 100);
-      img6 = createImage(100, 100);
-      img7 = createImage(100, 100);
-      img8 = createImage(100, 100);
-      img9 = createImage(100, 100);
-    }
+    try { img1 = loadImage("assets/p1.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img2 = loadImage("assets/p2.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img3 = loadImage("assets/p3.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img4 = loadImage("assets/p4.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img5 = loadImage("assets/p5.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img6 = loadImage("assets/p6.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img7 = loadImage("assets/p7.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img8 = loadImage("assets/p8.png"); } catch(e) { console.warn("Load Image Failed:", e); }
+    try { img9 = loadImage("assets/p9.png"); } catch(e) { console.warn("Load Image Failed:", e); }
   }
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
     textFont(globalFont); 
 
-    decoImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+    // 过滤掉因为环境问题未成功加载的空对象
+    decoImages = [];
+    let tempImgs = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+    for (let i = 0; i < tempImgs.length; i++) {
+      if (tempImgs[i]) decoImages.push(tempImgs[i]);
+    }
 
     video = createCapture(VIDEO);
     video.size(640, 480);
@@ -209,7 +192,8 @@
   // ==========================================================
   function initFallingImgs() {
     fallingImgs = [];
-    for (let i = 0; i < numDecoImages; i++) {
+    let spawnCount = decoImages.length > 0 ? decoImages.length : 9;
+    for (let i = 0; i < spawnCount; i++) {
       fallingImgs.push({
         x: random(width),
         y: random(-height * 1.5, height), 
@@ -218,12 +202,14 @@
         rot: random(TWO_PI),          
         rotSpeed: random(-0.01, 0.01),
         w: random(60, 110),            
-        imgIndex: i                    
+        imgIndex: decoImages.length > 0 ? (i % decoImages.length) : 0                  
       });
     }
   }
 
   function drawFallingImgs() {
+    if (decoImages.length === 0) return;
+    
     for (let p of fallingImgs) {
       p.x += p.speedX;
       p.y += p.speedY;
@@ -232,7 +218,7 @@
       if (p.y > height + 150) {
         p.y = random(-200, -50);
         p.x = random(width);
-        p.imgIndex = int(random(numDecoImages));
+        p.imgIndex = int(random(decoImages.length));
       }
 
       push();
@@ -252,21 +238,21 @@
   }
 
   // ==========================================================
-  // 核心排版引擎 (修改以适配竖直长方形信纸)
+  // 核心排版引擎【包含 智能避头标点 + 段落翻页判断】
   // ==========================================================
   function calculateLayout() {
     allPages = [];
     let currentPageLetters = [];
     textSize(myTextSize); textFont(globalFont);
 
-    // 【调整】强制设置信纸高宽比为竖长方形
-    let pH = min(height * 0.88, 1200);      // 占据屏幕大部分高度，但不超过 1200px
-    let pW = min(pH * 0.65, width * 0.85);  // 宽度为高度的 0.65 倍，并确保在小屏幕上不溢出
+    // 竖长方形信纸设置
+    let pH = min(height * 0.88, 1200);      
+    let pW = min(pH * 0.65, width * 0.85);  
     let paperX = width / 2 - pW / 2;
     let paperY = height / 2 - pH / 2;
 
-    // 【调整】动态内部留白，根据变窄的信纸响应式缩小 Padding，防止文字超出
-    let paddingX = min(80, pW * 0.12); 
+    // ✨ 这里增加了 paddingX 的比例和最大值，使得两边页边距更宽
+    let paddingX = min(120, pW * 0.18); 
     let paddingY = min(100, pH * 0.12);
     
     let startX = paperX + paddingX;
@@ -277,28 +263,100 @@
     let x = startX; let y = startY;
     let paragraphs = longText.split('\n');
 
+    // 匹配不能出现在行首的标点符号的正则表达式
+    let punctRegex = /^[·，。、！？：；”’）》】\.,!?]/;
+
     for (let p = 0; p < paragraphs.length; p++) {
       let paragraph = paragraphs[p];
+      
+      // 处理空行
       if (paragraph.trim() === "") {
         y += myLineHeight;
-        if (y > maxY) { allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY; }
+        if (y > maxY && currentPageLetters.length > 0) { 
+          allPages.push(currentPageLetters); 
+          currentPageLetters = []; 
+          x = startX; y = startY; 
+        }
         continue;
       }
+
+      // 【提前预测段落高度】，实现“一段话结束才可以翻页”
+      let linesNeeded = 1;
+      let simX = startX;
       for (let i = 0; i < paragraph.length; i++) {
         let char = paragraph[i];
         let charW = textWidth(char) + letterSpacing;
-        if (x + charW > maxX) {
-          x = startX; y += myLineHeight;
-          if (y > maxY) { allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY; }
+        let nextChar = i + 1 < paragraph.length ? paragraph[i+1] : '';
+        let isNextPunc = punctRegex.test(nextChar);
+        
+        // 模拟换行
+        if (simX + charW > maxX) {
+          simX = startX + charW;
+          linesNeeded++;
+        } else if (isNextPunc && simX + charW + textWidth(nextChar) + letterSpacing > maxX) {
+          simX = startX + charW;
+          linesNeeded++;
+        } else {
+          simX += charW;
         }
+      }
+      
+      let pHeight = linesNeeded * myLineHeight;
+
+      // 如果当前页装不下这一整段话，且当前页已有文字，我们直接换新页！
+      if (y + pHeight > maxY + myLineHeight && currentPageLetters.length > 0) {
+        allPages.push(currentPageLetters);
+        currentPageLetters = [];
+        x = startX;
+        y = startY;
+      }
+
+      // 真正开始对这一段落进行逐字排版
+      for (let i = 0; i < paragraph.length; i++) {
+        let char = paragraph[i];
+        let charW = textWidth(char) + letterSpacing;
+        let nextChar = i + 1 < paragraph.length ? paragraph[i+1] : '';
+        let isNextPunc = punctRegex.test(nextChar);
+
+        // 智能换行避头尾
+        if (x + charW > maxX) {
+          x = startX; 
+          y += myLineHeight;
+          if (y > maxY) { // 若一段话超级长跨越了整页的高度，也只能被动截断跨页
+            allPages.push(currentPageLetters); 
+            currentPageLetters = []; 
+            x = startX; y = startY; 
+          }
+        } 
+        // 避免下一个标点符号单独掉到下一行行首，把当前字一起拉下去
+        else if (isNextPunc && x + charW + textWidth(nextChar) + letterSpacing > maxX) {
+          x = startX; 
+          y += myLineHeight;
+          if (y > maxY) { 
+            allPages.push(currentPageLetters); 
+            currentPageLetters = []; 
+            x = startX; y = startY; 
+          }
+        }
+        
         currentPageLetters.push(createLetter(char, x, y));
         x += charW;
       }
-      x = startX; y += myLineHeight;
+      
+      // 一段话结束后的自然换行
+      x = startX; 
+      y += myLineHeight;
+      
+      // 如果刚好触底且不是最后一段话，执行自然翻页
       if (y > maxY && p < paragraphs.length - 1) { 
-        allPages.push(currentPageLetters); currentPageLetters = []; x = startX; y = startY;
+        if (currentPageLetters.length > 0) {
+          allPages.push(currentPageLetters); 
+          currentPageLetters = []; 
+        }
+        x = startX; y = startY;
       }
     }
+    // 最后收尾，把剩下的字组成一页
     if (currentPageLetters.length > 0) allPages.push(currentPageLetters);
   }
 
@@ -422,12 +480,9 @@
     drawRiverBackground();
     drawWaterSplashes();
 
-    // 绘制随落雪一同飘落的照片
     drawFallingImgs();
 
     noTint();
-    
-    // 【调整】同步更新图像的绘制宽高，确保其呈竖直长方形
     let pH = min(height * 0.88, 1200);
     let pW = min(pH * 0.65, width * 0.85);
     
@@ -438,23 +493,28 @@
     if (allPages.length > 0) {
       let currentLetters = allPages[currentPage];
 
+      // == 核心排版引擎的状态机已修改，加入了全新的终止态（s2State = 4） ==
       if (s2State === 0) { 
         if (frameCount % typeSpeed === 0 && visibleCount < currentLetters.length) visibleCount++;
         if (visibleCount >= currentLetters.length) { s2State = 1; s2Timer = 0; }
       } 
       else if (s2State === 1) { 
         s2Timer++;
-        if (s2Timer > 80) { 
-          if (currentPage < allPages.length - 1) {
-            s2State = 2; 
-            for(let l of currentLetters) l.forceFade = true;
-          } else { s2State = 3; }
+        if (s2Timer > 120) { // 稍微给点余量读完最后一句 
+          s2State = 2; // 无条件进入淡出状态，为下页/终止做准备
+          for(let l of currentLetters) l.forceFade = true;
         }
       } 
       else if (s2State === 2) { 
         let allFaded = true;
         for(let l of currentLetters) { if (l.alpha > 0) allFaded = false; }
-        if (allFaded) { currentPage++; visibleCount = 0; s2State = 0; }
+        if (allFaded) { 
+          if (currentPage < allPages.length - 1) {
+            currentPage++; visibleCount = 0; s2State = 0; 
+          } else {
+            s2State = 4; // 进入终止态
+          }
+        }
       }
 
       for (let i = 0; i < visibleCount; i++) {
@@ -464,10 +524,31 @@
 
     drawSnow();
 
-    if (s2State === 3 && !isScene2FadingOut) {
-      drawTheLight(width / 2, height - 120);
+    // 终止态渲染逻辑
+    if (s2State === 4) {
+      if (!bgmFading) {
+        if (bgmSound && typeof bgmSound.setVolume === 'function') {
+          // 调用 p5.sound 的内置缓动，用 6 秒将音量滑落至 0
+          bgmSound.setVolume(0, 6); 
+        }
+        bgmFading = true;
+      }
+      
+      if (finalQuoteAlpha < 255) {
+        finalQuoteAlpha += 1.2; // 文字慢慢显现
+      }
+
+      push();
+      textAlign(CENTER, CENTER);
+      textSize(22);
+      textLeading(40);
+      fill(40, finalQuoteAlpha); // 深色字体匹配信纸背景
+      let quote = "我们生来就拥有\n越过一切困难的勇气、毅力，\n与换个游戏玩玩的底气。";
+      text(quote, width / 2, height / 2);
+      pop();
     }
 
+    // 保留了兜底逻辑，但光点被移除，正常流程下不会再被触发回溯
     if (isScene2FadingOut) {
       globalFadeAlpha += 1.5;
       for (let l of allPages[currentPage]) l.forceFade = true;
@@ -484,12 +565,15 @@
     
     for(let k of keys) { k.osc.amp(0, 0.2); }
     
-    if (bgmSound && !bgmSound.isPlaying()) {
+    // 安全验证与播放
+    if (bgmSound && typeof bgmSound.isPlaying === 'function' && !bgmSound.isPlaying()) {
+      bgmSound.setVolume(1); // 重新进入场景时恢复音量
       bgmSound.loop();
     }
     
     globalFadeAlpha = 0; isScene2FadingOut = false;
     currentPage = 0; visibleCount = 0; s2State = 0; s2Timer = 0;
+    finalQuoteAlpha = 0; bgmFading = false; // 每次进入重置终止态
     
     initFallingImgs(); 
     calculateLayout();
@@ -497,7 +581,11 @@
 
   function transitionToScene1() {
     currentScene = 1; triggeredSentences = 0; floatingTexts = []; lightBreathing = 0;
-    if (bgmSound && bgmSound.isPlaying()) bgmSound.stop();
+    
+    // 安全验证与停止
+    if (bgmSound && typeof bgmSound.isPlaying === 'function' && bgmSound.isPlaying()) {
+      bgmSound.stop();
+    }
   }
 
   function mousePressed() {
@@ -509,9 +597,6 @@
     
     if (currentScene === 1 && triggeredSentences >= maxTriggersBeforeLight) {
       if (dist(mouseX, mouseY, width / 2, height / 2 - 150) < 50) transitionToScene2();
-    }
-    if (currentScene === 2 && s2State === 3 && !isScene2FadingOut) {
-      if (dist(mouseX, mouseY, width / 2, height - 120) < 50) isScene2FadingOut = true;
     }
   }
 
